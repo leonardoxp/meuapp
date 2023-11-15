@@ -11,7 +11,7 @@ class FeriadoPage extends StatefulWidget {
 
 class _SecondPageState extends State<FeriadoPage> {
   final HolidayService holidayService = HolidayService('https://brasilapi.com.br/api/feriados/v1');
-  List<String> holidays = [];
+  List<FeriadoModel> holidays = [];
 
   @override
   void initState() {
@@ -52,7 +52,9 @@ class _SecondPageState extends State<FeriadoPage> {
         itemCount: holidays.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(holidays[index]),
+            title: Text('${holidays[index].name!} - ${holidays[index].date!}'), //aqui pode chamar a formatação de data
+            // criando uma function em outro arquivo ou nesse.. passando a data como parametro tipo
+            // getFormatDate(holidays[index].date)
           );
         },
       );
