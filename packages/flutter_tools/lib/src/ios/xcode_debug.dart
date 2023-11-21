@@ -85,13 +85,6 @@ class XcodeDebug {
           project.xcodeProject.path,
           '--workspace-path',
           project.xcodeWorkspace.path,
-          '--project-name',
-          project.hostAppProjectName,
-          if (project.expectedConfigurationBuildDir != null)
-            ...<String>[
-              '--expected-configuration-build-dir',
-              project.expectedConfigurationBuildDir!,
-            ],
           '--device-id',
           deviceId,
           '--scheme',
@@ -317,7 +310,6 @@ class XcodeDebug {
           _xcode.xcodeAppPath,
           '-g', // Do not bring the application to the foreground.
           '-j', // Launches the app hidden.
-          '-F', // Open "fresh", without restoring windows.
           xcodeWorkspace.path
         ],
         throwOnError: true,
@@ -404,7 +396,6 @@ class XcodeDebug {
 
     return XcodeDebugProject(
       scheme: 'Runner',
-      hostAppProjectName: 'Runner',
       xcodeProject: tempXcodeProject.childDirectory('Runner.xcodeproj'),
       xcodeWorkspace: tempXcodeProject.childDirectory('Runner.xcworkspace'),
       isTemporaryProject: true,
@@ -479,8 +470,6 @@ class XcodeDebugProject {
     required this.scheme,
     required this.xcodeWorkspace,
     required this.xcodeProject,
-    required this.hostAppProjectName,
-    this.expectedConfigurationBuildDir,
     this.isTemporaryProject = false,
     this.verboseLogging = false,
   });
@@ -488,8 +477,6 @@ class XcodeDebugProject {
   final String scheme;
   final Directory xcodeWorkspace;
   final Directory xcodeProject;
-  final String hostAppProjectName;
-  final String? expectedConfigurationBuildDir;
   final bool isTemporaryProject;
 
   /// When [verboseLogging] is true, the xcode_debug.js script will log
